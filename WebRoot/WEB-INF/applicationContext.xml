@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.microsoft.sqlserver.jdbc.SQLServerDriver">
+		</property>
+		<property name="url"
+			value="jdbc:sqlserver://localhost:1433;databaseName=db_fwgq">
+		</property>
+		<property name="username" value="sa"></property>
+		<property name="password" value="sa"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+			
+				<prop key="hibernate.dialect"> org.hibernate.dialect.SQLServerDialect  </prop>
+				
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/model/TAdmin.hbm.xml</value>
+				<value>com/model/TUser.hbm.xml</value>
+				
+				<value>com/model/TChushou.hbm.xml</value>
+				<value>com/model/TChuzu.hbm.xml</value>
+				
+				<value>com/model/TGonggao.hbm.xml</value>
+				<value>com/model/TQiugou.hbm.xml</value>
+				
+				<value>com/model/TQiuzu.hbm.xml</value>
+				
+				<value>com/model/TLiuyan.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="indexAction" class="com.action.indexAction" scope="prototype">
+	
+	  <property name="chushouDAO">
+			<ref bean="TChushouDAO" />
+		</property>
+		
+		
+		<property name="chuzuDAO">
+			<ref bean="TChuzuDAO" />
+		</property>
+		
+		<property name="qiugouDAO">
+			<ref bean="TQiugouDAO" />
+		</property>
+		
+		<property name="qiuzuDAO">
+			<ref bean="TQiuzuDAO" />
+		</property>
+	
+	</bean>
+	
+	
+	
+	
+	<!-- 后台的登录 -->
+	<bean id="loginService" class="com.service.loginService">
+		<property name="adminDAO">
+			<ref bean="TAdminDAO" />
+		</property>
+		<property name="userDAO">
+			<ref bean="TUserDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="TAdminDAO" class="com.dao.TAdminDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
+	<bean id="TUserDAO" class="com.dao.TUserDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	
+	<bean id="userAction" class="com.action.UserAction" scope="prototype">
+		<property name="userDAO">
+			<ref bean="TUserDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<bean id="TChushouDAO" class="com.dao.TChushouDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="chushouAction" class="com.action.chushouAction" scope="prototype">
+		<property name="chushouDAO">
+			<ref bean="TChushouDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	<bean id="TChuzuDAO" class="com.dao.TChuzuDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="chuzuAction" class="com.action.chuzuAction" scope="prototype">
+		<property name="chuzuDAO">
+			<ref bean="TChuzuDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="TGonggaoDAO" class="com.dao.TGonggaoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="gonggaoAction" class="com.action.gonggaoAction" scope="prototype">
+		<property name="gonggaoDAO">
+			<ref bean="TGonggaoDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<bean id="TLiuyanDAO" class="com.dao.TLiuyanDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="liuyanAction" class="com.action.liuyanAction" scope="prototype">
+		<property name="liuyanDAO">
+			<ref bean="TLiuyanDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="TQiugouDAO" class="com.dao.TQiugouDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="qiugouAction" class="com.action.qiugouAction" scope="prototype">
+		<property name="qiugouDAO">
+			<ref bean="TQiugouDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="TQiuzuDAO" class="com.dao.TQiuzuDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="qiuzuAction" class="com.action.qiuzuAction" scope="prototype">
+		<property name="qiuzuDAO">
+			<ref bean="TQiuzuDAO" />
+		</property>
+	</bean>
+	
+	
+	
+	</beans>
