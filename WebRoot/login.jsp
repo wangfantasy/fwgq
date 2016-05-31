@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 %>
@@ -20,7 +20,7 @@ String path = request.getContextPath();
 		<script language="javascript">
 		function check1()
 		{                                                                                         
-		     if(document.loginForm.userName.value=="")
+		     if(document.loginForm.userName.value=="")   // 管理员登录
 			 {
 			 	alert("请输入用户名");
 				document.loginForm.userName.focus();
